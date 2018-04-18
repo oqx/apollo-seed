@@ -1,0 +1,21 @@
+version: '3.5'
+
+volumes:
+  data:
+
+services:
+  mongo: # name of the service
+    container_name: "mongo"
+    image: mongo:3.7.3-jessie
+    ports:
+      - "27018:27017"
+    volumes:
+      - ./data:/data/db
+
+  mongo-seed:
+    container_name: "seed"
+    build: ./src
+    links:
+      - mongo
+    env_file:
+      - .env
